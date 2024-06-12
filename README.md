@@ -12,7 +12,11 @@
 个人对代码进行一些更改以及汉化。
 
 # 使用方法
-1，clone 到/azerothcore-wotlk/modules 文件夹
-2，导入sql文件到acore_world 
-sudo mysql -u acore -p acore_world < mod_assistant.sql
+1，clone 到/azerothcore-wotlk/modules 文件夹。
+
+2，导入sql文件到acore_world    。
+
+sudo mysql -u acore -p acore_world < mod_assistant.sql    。
+
+
 3,修改位于/azeroth-server/etc/modules  的mod_assistant.conf.dist 配置文件，如果需要。
