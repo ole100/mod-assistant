@@ -16,7 +16,7 @@
 
 2，导入sql文件到acore_world    。
 
-sudo mysql -u acore -p acore_world < mod_assistant.sql    。
+sudo mysql -u acore -p acore_world < mod_assistant.sql    
 
 
 3,修改位于/azeroth-server/etc/modules  的mod_assistant.conf.dist 配置文件，如果需要。
