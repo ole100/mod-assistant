@@ -13,7 +13,10 @@
 
 
 # 使用方法
-1，clone 到/azerothcore-wotlk/modules 文件夹。
+1，clone 到/azerothcore-wotlk/modules 文件夹，
+
+make 
+make install
 
 2，导入位于/azerothcore-wotlk/modules/mod-assistant/data/sql/db-world/base的sql文件到acore_world    
 
