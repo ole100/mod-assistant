@@ -7,7 +7,7 @@
 
 通过配置可以启用或禁用上面列出的所有特性——允许用户只使用他们想要的特性。
 
-助理的入口是**9000000**。
+小助理NPC ID是9000000
 
 个人对代码进行一些更改以及汉化。
 Fork来源https://github.com/noisiver/mod-assistant.git
