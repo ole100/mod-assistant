@@ -10,6 +10,7 @@
 助理的入口是**9000000**。
 
 个人对代码进行一些更改以及汉化。
+Fork来源https://github.com/noisiver/mod-assistant.git，感谢大神
 
 # 使用方法
 1，clone 到/azerothcore-wotlk/modules 文件夹。
