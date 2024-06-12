@@ -8,9 +8,7 @@ uint32 Assistant::GetGlyphId(uint32 id, bool major)
 bool Assistant::HasLoginFlag(Player* player)
 {
     if (player->HasAtLoginFlag(AT_LOGIN_RENAME) || player->HasAtLoginFlag(AT_LOGIN_CUSTOMIZE) || player->HasAtLoginFlag(AT_LOGIN_CHANGE_RACE) || player->HasAtLoginFlag(AT_LOGIN_CHANGE_FACTION))
-    {
         return true;
-    }
 
     return false;
 }
@@ -19,21 +17,19 @@ void Assistant::SetLoginFlag(Player* player, AtLoginFlags flag, uint32 cost)
 {
     if (HasLoginFlag(player))
     {
-        ChatHandler(player->GetSession()).PSendSysMessage("You must complete the previously activated feature before trying to perform another.");
+        ChatHandler(player->GetSession()).PSendSysMessage("在尝试执行另一个功能之前，必须完成先前激活的功能.");
         return;
     }
 
     player->ModifyMoney(-cost);
     player->SetAtLoginFlag(flag);
-    ChatHandler(player->GetSession()).PSendSysMessage("You can now log out to continue using the activated feature.");
+    ChatHandler(player->GetSession()).PSendSysMessage("小退以继续使用已激活的功能.");
 }
 
 bool Assistant::CanUnlockFlightPaths(Player* player)
 {
     if ((FlightPathsEnabled[EXPANSION_CLASSIC] && player->GetLevel() >= FlightPathsRequiredLevel[EXPANSION_CLASSIC] && HasAvailableFlightPaths(player, EXPANSION_CLASSIC)) || (FlightPathsEnabled[EXPANSION_THE_BURNING_CRUSADE] && player->GetLevel() >= FlightPathsRequiredLevel[EXPANSION_THE_BURNING_CRUSADE] && HasAvailableFlightPaths(player, EXPANSION_THE_BURNING_CRUSADE)) || (FlightPathsEnabled[EXPANSION_WRATH_OF_THE_LICH_KING] && player->GetLevel() >= FlightPathsRequiredLevel[EXPANSION_WRATH_OF_THE_LICH_KING] && HasAvailableFlightPaths(player, EXPANSION_WRATH_OF_THE_LICH_KING)))
-    {
         return true;
-    }
 
     return false;
 }
@@ -233,17 +229,11 @@ bool Assistant::HasAvailableFlightPaths(Player* player, uint8 expansion)
     std::vector<int> flightpaths = GetAvailableFlightPaths(player, expansion);
 
     if (flightpaths.empty())
-    {
         return false;
-    }
 
     for (auto& flightpath : flightpaths)
-    {
         if (!player->m_taxi.IsTaximaskNodeKnown(flightpath))
-        {
             return true;
-        }
-    }
 
     return false;
 }
@@ -255,14 +245,10 @@ void Assistant::UnlockFlightPaths(Player* player, uint8 expansion)
     std::vector<int> flightpaths = GetAvailableFlightPaths(player, expansion);
 
     if (flightpaths.empty())
-    {
         return;
-    }
 
     for (auto& flightpath : flightpaths)
-    {
         player->GetSession()->SendDiscoverNewTaxiNode(flightpath);
-    }
 
     player->ModifyMoney(-cost);
 }
@@ -278,64 +264,64 @@ void Assistant::ListProfession(Player* player, uint32 id)
         switch (id)
         {
         case SKILL_FIRST_AID:
-            name = "First Aid";
+            name = "急救";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 1;
             break;
         case SKILL_BLACKSMITHING:
-            name = "Blacksmithing";
+            name = "锻造";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 2;
             break;
         case SKILL_LEATHERWORKING:
-            name = "Leatherworking";
+            name = "制皮";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 3;
             break;
         case SKILL_ALCHEMY:
-            name = "Alchemy";
+            name = "炼金术";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 4;
             break;
         case SKILL_HERBALISM:
-            name = "Herbalism";
+            name = "草药";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 5;
             break;
         case SKILL_COOKING:
-            name = "Cooking";
+            name = "烹饪";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 6;
             break;
         case SKILL_MINING:
-            name = "Mining";
+            name = "采矿";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 7;
             break;
         case SKILL_TAILORING:
-            name = "Tailoring";
+            name = "裁缝";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 8;
             break;
         case SKILL_ENGINEERING:
-            name = "Engineering";
+            name = "工程";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 9;
             break;
         case SKILL_ENCHANTING:
-            name = "Enchanting";
+            name = "附魔";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 10;
             break;
         case SKILL_FISHING:
-            name = "Fishing";
+            name = "钓鱼";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 11;
             break;
         case SKILL_SKINNING:
-            name = "Skinning";
+            name = "剥皮";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 12;
             break;
         case SKILL_INSCRIPTION:
-            name = "Inscription";
+            name = "铭文";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 13;
             break;
         case SKILL_JEWELCRAFTING:
-            name = "Jewelcrafting";
+            name = "珠宝加工";
             menu = ASSISTANT_GOSSIP_PROFESSIONS + 14;
             break;
         }
 
-        AddGossipItemFor(player, GOSSIP_ICON_TRAINER, Acore::StringFormat("I want help with my skill in %s", name), GOSSIP_SENDER_MAIN, menu, "Do you wish to continue the transaction?", cost, false);
+        AddGossipItemFor(player, GOSSIP_ICON_TRAINER, Acore::StringFormat("我要提升 %s", name), GOSSIP_SENDER_MAIN, menu, "您要继续交易吗?", cost, false);
     }
 }
 
@@ -350,9 +336,7 @@ void Assistant::SetProfession(Player* player, uint32 id)
 bool Assistant::HasValidProfession(Player* player)
 {
     if (IsValidProfession(player, SKILL_FIRST_AID) || IsValidProfession(player, SKILL_BLACKSMITHING) || IsValidProfession(player, SKILL_LEATHERWORKING) || IsValidProfession(player, SKILL_ALCHEMY) || IsValidProfession(player, SKILL_HERBALISM) || IsValidProfession(player, SKILL_COOKING) || IsValidProfession(player, SKILL_MINING) || IsValidProfession(player, SKILL_TAILORING) || IsValidProfession(player, SKILL_ENGINEERING) || IsValidProfession(player, SKILL_ENCHANTING) || IsValidProfession(player, SKILL_FISHING) || IsValidProfession(player, SKILL_SKINNING) || IsValidProfession(player, SKILL_INSCRIPTION) || IsValidProfession(player, SKILL_JEWELCRAFTING))
-    {
         return true;
-    }
 
     return false;
 }
@@ -360,9 +344,7 @@ bool Assistant::HasValidProfession(Player* player)
 bool Assistant::IsValidProfession(Player* player, uint32 id)
 {
     if (player->HasSkill(id) && ((player->GetPureSkillValue(id) < PROFESSION_LEVEL_APPRENTICE && player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_APPRENTICE && ApprenticeProfessionEnabled) || (player->GetPureSkillValue(id) < PROFESSION_LEVEL_JOURNEYMAN && player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_JOURNEYMAN && JourneymanProfessionEnabled) || (player->GetPureSkillValue(id) < PROFESSION_LEVEL_EXPERT && player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_EXPERT && ExpertProfessionEnabled) || (player->GetPureSkillValue(id) < PROFESSION_LEVEL_ARTISAN && player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_ARTISAN && ArtisanProfessionEnabled) || (player->GetPureSkillValue(id) < PROFESSION_LEVEL_MASTER && player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_MASTER && MasterProfessionEnabled) || (player->GetPureSkillValue(id) < PROFESSION_LEVEL_GRAND_MASTER && player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_GRAND_MASTER && GrandMasterProfessionEnabled)))
-    {
         return true;
-    }
 
     return false;
 }
@@ -370,29 +352,17 @@ bool Assistant::IsValidProfession(Player* player, uint32 id)
 uint32 Assistant::GetProfessionCost(Player* player, uint32 id)
 {
     if (player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_APPRENTICE)
-    {
         return ApprenticeProfessionCost;
-    }
     else if (player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_JOURNEYMAN)
-    {
         return JourneymanProfessionCost;
-    }
     else if (player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_EXPERT)
-    {
         return ExpertProfessionCost;
-    }
     else if (player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_ARTISAN)
-    {
         return ArtisanProfessionCost;
-    }
     else if (player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_MASTER)
-    {
         return MasterProfessionCost;
-    }
     else if (player->GetPureMaxSkillValue(id) == PROFESSION_LEVEL_GRAND_MASTER)
-    {
         return GrandMasterProfessionCost;
-    }
 
     return 0;
 }
